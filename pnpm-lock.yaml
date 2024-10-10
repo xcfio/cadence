@@ -18,8 +18,8 @@ importers:
         specifier: ^6.7.1
         version: 6.7.1(@discord-player/extractor@4.5.1)
       discord-player-youtubei:
-        specifier: 1.3.1
-        version: 1.3.1
+        specifier: 1.3.2
+        version: 1.3.2
       discord.js:
         specifier: ^14.16.3
         version: 14.16.3
@@ -27,8 +27,8 @@ importers:
         specifier: ^16.4.5
         version: 16.4.5
       i18next:
-        specifier: ^23.14.0
-        version: 23.14.0
+        specifier: ^23.15.2
+        version: 23.15.2
       i18next-fs-backend:
         specifier: ^2.3.2
         version: 2.3.2
@@ -43,7 +43,7 @@ importers:
         version: 9.4.0
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@types/node@22.5.2)(typescript@5.5.4)
+        version: 10.9.2(@types/node@22.7.5)(typescript@5.5.4)
     optionalDependencies:
       pino-pretty:
         specifier: ^11.2.2
@@ -53,8 +53,8 @@ importers:
         specifier: ^3.3.5
         version: 3.3.5
       '@types/node':
-        specifier: ^22.5.2
-        version: 22.5.2
+        specifier: ^22.7.5
+        version: 22.7.5
       '@types/node-os-utils':
         specifier: ^1.3.4
         version: 1.3.4
@@ -70,6 +70,9 @@ packages:
   '@babel/runtime@7.25.0':
     resolution: {integrity: sha512-7dRy4DwXwtzBrPbZflqxnvfxLF8kdZXPkhymtDeFoFqE6ldzjQFgYTtYIFARcLEYDrqfBfYcZt1WqFxRoyC9Rw==}
     engines: {node: '>=6.9.0'}
+
+  '@bufbuild/protobuf@2.2.0':
+    resolution: {integrity: sha512-+imAQkHf7U/Rwvu0wk1XWgsP3WnpCWmK7B48f0XqSNzgk64+grljTKC7pnO/xBiEMUziF7vKRfbBnOQhg126qQ==}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -165,8 +168,8 @@ packages:
   '@types/node-os-utils@1.3.4':
     resolution: {integrity: sha512-BCUYrbdoO4FUbx6MB9atLNFnkxdliFaxdiTJMIPPiecXIApc5zf4NIqV5G1jWv/ReZvtYyHLs40RkBjHX+vykA==}
 
-  '@types/node@22.5.2':
-    resolution: {integrity: sha512-acJsPTEqYqulZS/Yp/S3GgeE6GZ0qYODUR8aVr/DkhHQ8l9nd4j5x1/ZJy9/gHrRlFMqkO6i0I3E27Alu4jjPg==}
+  '@types/node@22.7.5':
+    resolution: {integrity: sha512-jML7s2NAzMWc//QSJ1a3prpk78cOPchGvXJsC3C6R6PSMoooztvRVQEz89gmBTBY1SPMaqo5teB4uNHPdetShQ==}
 
   '@types/ws@8.5.12':
     resolution: {integrity: sha512-3tPRkv1EtkDpzlgyKyI8pGsGZAGPEaXeu0DOj5DI25Ja91bdAYddYHbADRYVrZMRbfW+1l5YwXVDKohDJNQxkQ==}
@@ -245,8 +248,8 @@ packages:
   discord-api-types@0.37.97:
     resolution: {integrity: sha512-No1BXPcVkyVD4ZVmbNgDKaBoqgeQ+FJpzZ8wqHkfmBnTZig1FcH3iPPersiK1TUIAzgClh2IvOuVUYfcWLQAOA==}
 
-  discord-player-youtubei@1.3.1:
-    resolution: {integrity: sha512-0JtWAux1SKBMG543PktNKrsydBLBarOvPn9dsu1xNfXQYbUSglOZgGRjcKxK6MgGj5MluSEer5QXE/UJYseIJg==}
+  discord-player-youtubei@1.3.2:
+    resolution: {integrity: sha512-NtKtLiR9HMYfTDXYvBeQCE+k3eegjB+ttaBq7gYdldIghBZ4fYHb0ERsAcY6lN4bQyAq0DaPFRIRbyk9Pi0TSg==}
     hasBin: true
 
   discord-player@6.7.1:
@@ -339,8 +342,8 @@ packages:
     resolution: {integrity: sha512-gzVYct/sMeeOzomK0+8nl7YSr61xiDzf4Kg51g7StBaXAaKE/Vb1CLNHZ8dY56sYz6qmbwHRYHqMPanGi0go4w==}
     hasBin: true
 
-  i18next@23.14.0:
-    resolution: {integrity: sha512-Y5GL4OdA8IU2geRrt2+Uc1iIhsjICdHZzT9tNwQ3TVqdNzgxHToGCKf/TPRP80vTCAP6svg2WbbJL+Gx5MFQVA==}
+  i18next@23.15.2:
+    resolution: {integrity: sha512-zcPSWzCvw6uKnuYHIqs4W7hTuB9e3AFcSdZgvCWoPXIZsBjBd4djN2/2uOHIB+1DFFkQnMBXvhNg7J3WyCuywQ==}
 
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
@@ -688,14 +691,16 @@ packages:
   youtube-sr@4.3.11:
     resolution: {integrity: sha512-3oHiS2x7PpMiDRW7Cq8nz1bkAIBOJHoOwkPl/oncM/+A9/3xxMDgMLGW2dsBEP1DHFyRXYTVABgfbdwHF8sXXQ==}
 
-  youtubei.js@10.4.0:
-    resolution: {integrity: sha512-FZahkkg5ROyH/FgJ4czy/xDNkqHbJTCUQzumQlnR+2Q7m6HaWghAFWWJUTcexemGuu7t/5EuyQz98eBgKQRMog==}
+  youtubei.js@10.5.0:
+    resolution: {integrity: sha512-iyA+VF28c15tCCKH9ExM2RKC3zYiHzA/eixGlJ3vERANkuI+xYKzAZ4vtOhmyqwrAddu88R/DkzEsmpph5NWjg==}
 
 snapshots:
 
   '@babel/runtime@7.25.0':
     dependencies:
       regenerator-runtime: 0.14.1
+
+  '@bufbuild/protobuf@2.2.0': {}
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -805,13 +810,13 @@ snapshots:
 
   '@types/node-os-utils@1.3.4': {}
 
-  '@types/node@22.5.2':
+  '@types/node@22.7.5':
     dependencies:
       undici-types: 6.19.8
 
   '@types/ws@8.5.12':
     dependencies:
-      '@types/node': 22.5.2
+      '@types/node': 22.7.5
 
   '@vladfrangu/async_event_emitter@2.4.6': {}
 
@@ -872,10 +877,10 @@ snapshots:
 
   discord-api-types@0.37.97: {}
 
-  discord-player-youtubei@1.3.1:
+  discord-player-youtubei@1.3.2:
     dependencies:
       tiny-typed-emitter: 2.1.0
-      youtubei.js: 10.4.0
+      youtubei.js: 10.5.0
 
   discord-player@6.7.1(@discord-player/extractor@4.5.1):
     dependencies:
@@ -1004,7 +1009,7 @@ snapshots:
       '@babel/runtime': 7.25.0
       yaml: 2.5.0
 
-  i18next@23.14.0:
+  i18next@23.15.2:
     dependencies:
       '@babel/runtime': 7.25.0
 
@@ -1250,14 +1255,14 @@ snapshots:
 
   ts-mixer@6.0.4: {}
 
-  ts-node@10.9.2(@types/node@22.5.2)(typescript@5.5.4):
+  ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.11
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 22.5.2
+      '@types/node': 22.7.5
       acorn: 8.12.1
       acorn-walk: 8.3.3
       arg: 4.1.3
@@ -1308,8 +1313,9 @@ snapshots:
 
   youtube-sr@4.3.11: {}
 
-  youtubei.js@10.4.0:
+  youtubei.js@10.5.0:
     dependencies:
+      '@bufbuild/protobuf': 2.2.0
       jintr: 2.1.1
       tslib: 2.6.3
       undici: 5.28.4
