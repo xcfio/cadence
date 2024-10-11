@@ -1,71 +1,71 @@
-import { type GuildQueue, useMainPlayer, useQueue } from 'discord-player';
+import { type GuildQueue, useMainPlayer, useQueue } from "discord-player"
 import {
     type ChatInputCommandInteraction,
     EmbedBuilder,
     type GuildMember,
     type Message,
     SlashCommandBuilder
-} from 'discord.js';
-import { BaseSlashCommandInteraction } from '../../common/classes/interactions';
-import type { BaseSlashCommandParams, BaseSlashCommandReturnType } from '../../types/interactionTypes';
-import { checkInVoiceChannel } from '../../common/validation/voiceChannelValidator';
-import { checkVoicePermissionJoinAndTalk } from '../../common/validation/permissionValidator';
-import type { Logger } from '../../common/services/logger';
-import { localizeCommand, useServerTranslator, type Translator } from '../../common/utils/localeUtil';
-import { formatSlashCommand } from '../../common/utils/formattingUtils';
+} from "discord.js"
+import { BaseSlashCommandInteraction } from "../../common/classes/interactions"
+import type { BaseSlashCommandParams, BaseSlashCommandReturnType } from "../../types/interactionTypes"
+import { checkInVoiceChannel } from "../../common/validation/voiceChannelValidator"
+import { checkVoicePermissionJoinAndTalk } from "../../common/validation/permissionValidator"
+import type { Logger } from "../../common/services/logger"
+import { localizeCommand, useServerTranslator, type Translator } from "../../common/utils/localeUtil"
+import { formatSlashCommand } from "../../common/utils/formattingUtils"
 
 class JoinCommand extends BaseSlashCommandInteraction {
     constructor() {
-        const data = localizeCommand(new SlashCommandBuilder().setName('join'));
-        super(data);
+        const data = localizeCommand(new SlashCommandBuilder().setName("join"))
+        super(data)
     }
 
     async execute(params: BaseSlashCommandParams): BaseSlashCommandReturnType {
-        const { executionId, interaction } = params;
-        const logger = this.getLogger(this.name, executionId, interaction);
-        const translator = useServerTranslator(interaction);
+        const { executionId, interaction } = params
+        const logger = this.getLogger(this.name, executionId, interaction)
+        const translator = useServerTranslator(interaction)
 
-        await this.runValidators({ interaction, executionId }, [checkInVoiceChannel, checkVoicePermissionJoinAndTalk]);
+        await this.runValidators({ interaction, executionId }, [checkInVoiceChannel, checkVoicePermissionJoinAndTalk])
 
-        await interaction.deferReply();
-        logger.debug('Interaction deferred.');
+        await interaction.deferReply()
+        logger.debug("Interaction deferred.")
 
-        const existingQueue = useQueue(interaction.guild!.id);
+        const existingQueue = useQueue(interaction.guild!.id)
 
         if (existingQueue) {
-            return await this.handleExisitingQueue(interaction, existingQueue, translator);
+            return await this.handleExisitingQueue(interaction, existingQueue, translator)
         }
 
-        const queue = this.createQueue(interaction);
+        const queue = this.createQueue(interaction)
         if (!queue) {
-            return await this.handleCouldNotConnect(interaction, translator);
+            return await this.handleCouldNotConnect(interaction, translator)
         }
 
-        await this.connectToVoiceChannel(logger, queue, interaction);
+        await this.connectToVoiceChannel(logger, queue, interaction)
         if (!queue.dispatcher) {
-            return await this.handleCouldNotConnect(interaction, translator);
+            return await this.handleCouldNotConnect(interaction, translator)
         }
 
-        logger.debug('Responding with success embed.');
+        logger.debug("Responding with success embed.")
         return await interaction.editReply({
             embeds: [
                 new EmbedBuilder()
                     .setAuthor(this.getEmbedUserAuthor(interaction))
                     .setDescription(
-                        translator('commands.join.joinedChannel', {
+                        translator("commands.join.joinedChannel", {
                             icon: this.embedOptions.icons.success,
                             channel: `<#${queue.dispatcher.channel.id}>`,
-                            playCommand: formatSlashCommand('play', translator)
+                            playCommand: formatSlashCommand("play", translator)
                         })
                     )
                     .setColor(this.embedOptions.colors.success)
             ]
-        });
+        })
     }
 
     private createQueue(interaction: ChatInputCommandInteraction): GuildQueue | undefined {
         try {
-            const player = useMainPlayer();
+            const player = useMainPlayer()
             const createdQueue = player?.queues.create(interaction.guild!.id, {
                 ...this.playerOptions,
                 maxSize: this.playerOptions.maxQueueSize,
@@ -74,10 +74,10 @@ class JoinCommand extends BaseSlashCommandInteraction {
                     channel: interaction.channel,
                     client: interaction.client
                 }
-            });
-            return createdQueue;
+            })
+            return createdQueue
         } catch {
-            return undefined;
+            return undefined
         }
     }
 
@@ -87,11 +87,11 @@ class JoinCommand extends BaseSlashCommandInteraction {
         interaction: ChatInputCommandInteraction
     ): Promise<void> {
         try {
-            logger.debug('Connecting to channel.');
-            const channel = (interaction.member! as GuildMember).voice.channel!;
-            await queue.connect(channel);
+            logger.debug("Connecting to channel.")
+            const channel = (interaction.member! as GuildMember).voice.channel!
+            await queue.connect(channel)
         } catch {
-            return undefined;
+            return undefined
         }
     }
 
@@ -104,13 +104,13 @@ class JoinCommand extends BaseSlashCommandInteraction {
                 new EmbedBuilder()
                     .setAuthor(this.getEmbedUserAuthor(interaction))
                     .setDescription(
-                        translator('commands.join.couldNotJoin', {
+                        translator("commands.join.couldNotJoin", {
                             icon: this.embedOptions.icons.warning
                         })
                     )
                     .setColor(this.embedOptions.colors.warning)
             ]
-        });
+        })
     }
 
     private async handleExisitingQueue(
@@ -118,24 +118,24 @@ class JoinCommand extends BaseSlashCommandInteraction {
         queue: GuildQueue,
         translator: Translator
     ): Promise<Message> {
-        const connectedChannel = queue.dispatcher?.channel;
-        const channelMention = connectedChannel?.id ? `<#${connectedChannel.id}>` : '<#0>';
+        const connectedChannel = queue.dispatcher?.channel
+        const channelMention = connectedChannel?.id ? `<#${connectedChannel.id}>` : "<#0>"
 
         return await interaction.editReply({
             embeds: [
                 new EmbedBuilder()
                     .setAuthor(this.getEmbedUserAuthor(interaction))
                     .setDescription(
-                        translator('commands.join.alreadyConnected', {
+                        translator("commands.join.alreadyConnected", {
                             icon: this.embedOptions.icons.warning,
                             channel: channelMention,
-                            leaveCommand: formatSlashCommand('leave', translator)
+                            leaveCommand: formatSlashCommand("leave", translator)
                         })
                     )
                     .setColor(this.embedOptions.colors.warning)
             ]
-        });
+        })
     }
 }
 
-export default new JoinCommand();
+export default new JoinCommand()

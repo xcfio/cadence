@@ -1,33 +1,33 @@
-import config from 'config';
-import { type BaseGuildTextChannel, EmbedBuilder } from 'discord.js';
-import { randomUUID as uuidv4 } from 'node:crypto';
-import { loggerService, type Logger } from '../../common/services/logger';
-import type { ExtendedClient } from '../../types/clientTypes';
-import type { EmbedOptions, SystemOptions } from '../../types/configTypes';
+import config from "config"
+import { type BaseGuildTextChannel, EmbedBuilder } from "discord.js"
+import { randomUUID as uuidv4 } from "node:crypto"
+import { loggerService, type Logger } from "../../common/services/logger"
+import type { ExtendedClient } from "../../types/clientTypes"
+import type { EmbedOptions, SystemOptions } from "../../types/configTypes"
 
-const embedOptions: EmbedOptions = config.get('embedOptions');
-const systemOptions: SystemOptions = config.get('systemOptions');
+const embedOptions: EmbedOptions = config.get("embedOptions")
+const systemOptions: SystemOptions = config.get("systemOptions")
 module.exports = {
-    name: 'reconnecting',
+    name: "reconnecting",
     isDebug: false,
     once: false,
     execute: async (client: ExtendedClient) => {
-        const executionId: string = uuidv4();
+        const executionId: string = uuidv4()
         const logger: Logger = loggerService.child({
-            module: 'event',
-            name: 'clientReconnecting',
+            module: "event",
+            name: "clientReconnecting",
             executionId: executionId,
             shardId: client.shard?.ids[0]
-        });
+        })
 
-        logger.warn('Client is reconnecting to Discord APIs.');
+        logger.warn("Client is reconnecting to Discord APIs.")
 
         // send message to system message channel for event
         if (systemOptions.systemMessageChannelId && systemOptions.systemUserId) {
             if (systemOptions.systemMessageChannelId && systemOptions.systemUserId) {
                 const channel: BaseGuildTextChannel = (await client.channels.cache.get(
                     systemOptions.systemMessageChannelId
-                )) as BaseGuildTextChannel;
+                )) as BaseGuildTextChannel
                 if (channel) {
                     await channel.send({
                         embeds: [
@@ -38,9 +38,9 @@ module.exports = {
                                 )
                                 .setColor(embedOptions.colors.warning)
                         ]
-                    });
+                    })
                 }
             }
         }
     }
-};
+}

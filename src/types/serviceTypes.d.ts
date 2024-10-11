@@ -1,21 +1,21 @@
-export type LogLevel = 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace' | 'silent';
+export type LogLevel = "fatal" | "error" | "warn" | "info" | "debug" | "trace" | "silent"
 
 export type TargetOptions = {
-    target: string;
-    level: LogLevel;
+    target: string
+    level: LogLevel
     options: {
-        destination?: string;
-        mkdir?: boolean;
-        sync?: boolean;
-        minLength?: number;
-        colorize?: boolean;
-        batching?: boolean;
-        interval?: number;
-        host?: string;
+        destination?: string
+        mkdir?: boolean
+        sync?: boolean
+        minLength?: number
+        colorize?: boolean
+        batching?: boolean
+        interval?: number
+        host?: string
         basicAuth?: {
-            username: string;
-            password: string;
-        };
-        ignore?: string;
-    };
-};
+            username: string
+            password: string
+        }
+        ignore?: string
+    }
+}

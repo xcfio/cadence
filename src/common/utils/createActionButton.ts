@@ -5,7 +5,7 @@ import {
     type APIMessageActionRowComponent,
     ButtonBuilder,
     ButtonStyle
-} from 'discord.js';
+} from "discord.js"
 
 export function createNewActionButton(
     customId: string,
@@ -16,11 +16,11 @@ export function createNewActionButton(
         .setCustomId(customId)
         .setStyle(ButtonStyle.Secondary)
         .setEmoji(emoji)
-        .toJSON() as APIButtonComponentWithCustomId;
+        .toJSON() as APIButtonComponentWithCustomId
 
     if (embedActionRow) {
-        embedActionRow.components.push(actionButton);
+        embedActionRow.components.push(actionButton)
     }
 
-    return actionButton;
+    return actionButton
 }

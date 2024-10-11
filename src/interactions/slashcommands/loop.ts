@@ -1,61 +1,61 @@
-import { type GuildQueue, QueueRepeatMode, useQueue } from 'discord-player';
+import { type GuildQueue, QueueRepeatMode, useQueue } from "discord-player"
 import {
     type ChatInputCommandInteraction,
     EmbedBuilder,
     type InteractionResponse,
     SlashCommandBuilder,
     SlashCommandIntegerOption
-} from 'discord.js';
-import type { Logger } from '../../common/services/logger';
-import { BaseSlashCommandInteraction } from '../../common/classes/interactions';
-import type { BaseSlashCommandParams, BaseSlashCommandReturnType } from '../../types/interactionTypes';
-import { checkQueueExists } from '../../common/validation/queueValidator';
-import { checkInVoiceChannel, checkSameVoiceChannel } from '../../common/validation/voiceChannelValidator';
-import { localizeCommand, useServerTranslator, type Translator } from '../../common/utils/localeUtil';
-import { formatRepeatMode } from '../../common/utils/formattingUtils';
+} from "discord.js"
+import type { Logger } from "../../common/services/logger"
+import { BaseSlashCommandInteraction } from "../../common/classes/interactions"
+import type { BaseSlashCommandParams, BaseSlashCommandReturnType } from "../../types/interactionTypes"
+import { checkQueueExists } from "../../common/validation/queueValidator"
+import { checkInVoiceChannel, checkSameVoiceChannel } from "../../common/validation/voiceChannelValidator"
+import { localizeCommand, useServerTranslator, type Translator } from "../../common/utils/localeUtil"
+import { formatRepeatMode } from "../../common/utils/formattingUtils"
 
 class LoopCommand extends BaseSlashCommandInteraction {
     constructor() {
         const data = localizeCommand(
             new SlashCommandBuilder()
-                .setName('loop')
+                .setName("loop")
                 .addIntegerOption(() =>
                     new SlashCommandIntegerOption()
-                        .setName('mode')
+                        .setName("mode")
                         .setRequired(false)
                         .addChoices(
-                            { value: QueueRepeatMode.TRACK, name: ' ' },
-                            { value: QueueRepeatMode.QUEUE, name: ' ' },
-                            { value: QueueRepeatMode.AUTOPLAY, name: ' ' },
-                            { value: QueueRepeatMode.OFF, name: ' ' }
+                            { value: QueueRepeatMode.TRACK, name: " " },
+                            { value: QueueRepeatMode.QUEUE, name: " " },
+                            { value: QueueRepeatMode.AUTOPLAY, name: " " },
+                            { value: QueueRepeatMode.OFF, name: " " }
                         )
                 )
-        );
-        super(data);
+        )
+        super(data)
     }
 
     async execute(params: BaseSlashCommandParams): BaseSlashCommandReturnType {
-        const { executionId, interaction } = params;
-        const logger = this.getLogger(this.name, executionId, interaction);
-        const translator = useServerTranslator(interaction);
+        const { executionId, interaction } = params
+        const logger = this.getLogger(this.name, executionId, interaction)
+        const translator = useServerTranslator(interaction)
 
-        const queue: GuildQueue = useQueue(interaction.guild!.id)!;
+        const queue: GuildQueue = useQueue(interaction.guild!.id)!
 
         await this.runValidators({ interaction, queue, executionId }, [
             checkInVoiceChannel,
             checkSameVoiceChannel,
             checkQueueExists
-        ]);
+        ])
 
-        const userInputRepeatMode: QueueRepeatMode = interaction.options.getInteger('mode')!;
-        const currentRepeatMode: QueueRepeatMode = queue.repeatMode;
+        const userInputRepeatMode: QueueRepeatMode = interaction.options.getInteger("mode")!
+        const currentRepeatMode: QueueRepeatMode = queue.repeatMode
 
         if (!userInputRepeatMode && userInputRepeatMode !== 0) {
-            return await this.handleNoInputMode(logger, interaction, currentRepeatMode, translator);
+            return await this.handleNoInputMode(logger, interaction, currentRepeatMode, translator)
         }
 
         if (userInputRepeatMode === currentRepeatMode) {
-            return await this.handleSameMode(logger, interaction, userInputRepeatMode, translator);
+            return await this.handleSameMode(logger, interaction, userInputRepeatMode, translator)
         }
 
         return await this.handleChangeMode(
@@ -65,7 +65,7 @@ class LoopCommand extends BaseSlashCommandInteraction {
             currentRepeatMode,
             userInputRepeatMode,
             translator
-        );
+        )
     }
 
     private async handleNoInputMode(
@@ -74,25 +74,25 @@ class LoopCommand extends BaseSlashCommandInteraction {
         currentRepeatMode: QueueRepeatMode,
         translator: Translator
     ): Promise<InteractionResponse<boolean>> {
-        logger.debug('No repeat mode was provided, responding with current repeat mode.');
+        logger.debug("No repeat mode was provided, responding with current repeat mode.")
 
         const repeatModeEmbedIcon =
-            currentRepeatMode === 3 ? this.embedOptions.icons.autoplay : this.embedOptions.icons.loop;
-        const repeatModeEmbedName = formatRepeatMode(currentRepeatMode, translator);
+            currentRepeatMode === 3 ? this.embedOptions.icons.autoplay : this.embedOptions.icons.loop
+        const repeatModeEmbedName = formatRepeatMode(currentRepeatMode, translator)
 
-        logger.debug('Responding with info embed.');
+        logger.debug("Responding with info embed.")
         return await interaction.reply({
             embeds: [
                 new EmbedBuilder()
                     .setDescription(
-                        translator('commands.loop.loopModeInformation', {
+                        translator("commands.loop.loopModeInformation", {
                             icon: repeatModeEmbedIcon,
                             mode: repeatModeEmbedName
                         })
                     )
                     .setColor(this.embedOptions.colors.info)
             ]
-        });
+        })
     }
 
     private async handleSameMode(
@@ -101,14 +101,14 @@ class LoopCommand extends BaseSlashCommandInteraction {
         currentRepeatMode: QueueRepeatMode,
         translator: Translator
     ): Promise<InteractionResponse<boolean>> {
-        const repeatModeEmbedName = formatRepeatMode(currentRepeatMode, translator);
-        logger.debug(`Loop mode is already set to '${repeatModeEmbedName}'.`);
-        logger.debug('Responding with warning embed.');
+        const repeatModeEmbedName = formatRepeatMode(currentRepeatMode, translator)
+        logger.debug(`Loop mode is already set to '${repeatModeEmbedName}'.`)
+        logger.debug("Responding with warning embed.")
         return await interaction.reply({
             embeds: [
                 new EmbedBuilder()
                     .setDescription(
-                        translator('commands.loop.alreadySet', {
+                        translator("commands.loop.alreadySet", {
                             icon: this.embedOptions.icons.warning,
                             mode: repeatModeEmbedName
                         })
@@ -116,7 +116,7 @@ class LoopCommand extends BaseSlashCommandInteraction {
                     .setColor(this.embedOptions.colors.warning)
             ],
             ephemeral: true
-        });
+        })
     }
 
     private async handleChangeMode(
@@ -127,17 +127,17 @@ class LoopCommand extends BaseSlashCommandInteraction {
         toRepeatMode: QueueRepeatMode,
         translator: Translator
     ): Promise<InteractionResponse<boolean>> {
-        const newRepeatModeEmbedName = formatRepeatMode(toRepeatMode, translator);
+        const newRepeatModeEmbedName = formatRepeatMode(toRepeatMode, translator)
         const getChangedRepeatModeEmbedReply = this.getChangedRepeatModeEmbedReply(
             fromRepeatMode,
             toRepeatMode,
             translator
-        );
+        )
 
-        queue.setRepeatMode(toRepeatMode);
-        logger.debug(`Loop mode changed to '${newRepeatModeEmbedName}'.`);
+        queue.setRepeatMode(toRepeatMode)
+        logger.debug(`Loop mode changed to '${newRepeatModeEmbedName}'.`)
 
-        logger.debug('Responding with success embed.');
+        logger.debug("Responding with success embed.")
         return await interaction.reply({
             embeds: [
                 new EmbedBuilder()
@@ -145,7 +145,7 @@ class LoopCommand extends BaseSlashCommandInteraction {
                     .setDescription(getChangedRepeatModeEmbedReply)
                     .setColor(this.embedOptions.colors.success)
             ]
-        });
+        })
     }
 
     private getChangedRepeatModeEmbedReply(
@@ -153,30 +153,30 @@ class LoopCommand extends BaseSlashCommandInteraction {
         toRepeatMode: QueueRepeatMode,
         translator: Translator
     ): string {
-        const fromRepeatModeEmbedName = formatRepeatMode(fromRepeatMode, translator);
-        const toRepeatModeEmbedName = formatRepeatMode(toRepeatMode, translator);
+        const fromRepeatModeEmbedName = formatRepeatMode(fromRepeatMode, translator)
+        const toRepeatModeEmbedName = formatRepeatMode(toRepeatMode, translator)
 
-        let repeatModeIcon = this.embedOptions.icons.looping;
-        let newRepeatModeMessage: string = translator('commands.loop.willNowPlay', {
+        let repeatModeIcon = this.embedOptions.icons.looping
+        let newRepeatModeMessage: string = translator("commands.loop.willNowPlay", {
             mode: toRepeatModeEmbedName
-        });
+        })
 
         if (toRepeatMode === QueueRepeatMode.OFF) {
-            repeatModeIcon = this.embedOptions.icons.success;
-            newRepeatModeMessage = translator('commands.loop.willNoLongerPlay', {
+            repeatModeIcon = this.embedOptions.icons.success
+            newRepeatModeMessage = translator("commands.loop.willNoLongerPlay", {
                 mode: fromRepeatModeEmbedName
-            });
+            })
         } else if (toRepeatMode === QueueRepeatMode.AUTOPLAY) {
-            repeatModeIcon = this.embedOptions.icons.autoplaying;
-            newRepeatModeMessage = translator('commands.loop.willAutoplay');
+            repeatModeIcon = this.embedOptions.icons.autoplaying
+            newRepeatModeMessage = translator("commands.loop.willAutoplay")
         }
 
-        return `${translator('commands.loop.modeChanged', {
+        return `${translator("commands.loop.modeChanged", {
             icon: repeatModeIcon,
             fromName: fromRepeatModeEmbedName,
             toName: toRepeatModeEmbedName
-        })}\n\n${newRepeatModeMessage}`;
+        })}\n\n${newRepeatModeMessage}`
     }
 }
 
-export default new LoopCommand();
+export default new LoopCommand()

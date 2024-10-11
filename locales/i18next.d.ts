@@ -1,8 +1,8 @@
-import Resources from './resources';
+import Resources from "./resources"
 
-declare module 'i18next' {
+declare module "i18next" {
     interface CustomTypeOptions {
-        defaultNS: 'bot';
-        resources: Resources;
+        defaultNS: "bot"
+        resources: Resources
     }
 }

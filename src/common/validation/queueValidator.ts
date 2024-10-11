@@ -1,34 +1,34 @@
-import config from 'config';
-import { EmbedBuilder, GuildMember, InteractionType } from 'discord.js';
-import { InteractionValidationError } from '../classes/interactions';
-import { loggerService, type Logger } from '../services/logger';
-import type { EmbedOptions } from '../../types/configTypes';
-import type { ValidatorParams } from '../../types/utilTypes';
-import { useServerTranslator } from '../utils/localeUtil';
-import { formatSlashCommand } from '../utils/formattingUtils';
+import config from "config"
+import { EmbedBuilder, GuildMember, InteractionType } from "discord.js"
+import { InteractionValidationError } from "../classes/interactions"
+import { loggerService, type Logger } from "../services/logger"
+import type { EmbedOptions } from "../../types/configTypes"
+import type { ValidatorParams } from "../../types/utilTypes"
+import { useServerTranslator } from "../utils/localeUtil"
+import { formatSlashCommand } from "../utils/formattingUtils"
 
-const embedOptions: EmbedOptions = config.get('embedOptions');
+const embedOptions: EmbedOptions = config.get("embedOptions")
 export const checkQueueExists = async ({ interaction, queue, executionId }: ValidatorParams) => {
     const logger: Logger = loggerService.child({
-        module: 'utilValidation',
-        name: 'queueDoesNotExist',
+        module: "utilValidation",
+        name: "queueDoesNotExist",
         executionId: executionId,
         shardId: interaction.guild?.shardId,
         guildId: interaction.guild?.id
-    });
-    const translator = useServerTranslator(interaction);
+    })
+    const translator = useServerTranslator(interaction)
 
     const interactionIdentifier =
-        interaction.type === InteractionType.ApplicationCommand ? interaction.commandName : interaction.customId;
+        interaction.type === InteractionType.ApplicationCommand ? interaction.commandName : interaction.customId
 
     if (!queue) {
         await interaction.reply({
             embeds: [
                 new EmbedBuilder()
                     .setDescription(
-                        translator('validation.queueDoesNotExist', {
+                        translator("validation.queueDoesNotExist", {
                             icon: embedOptions.icons.warning,
-                            playCommand: formatSlashCommand('play', translator)
+                            playCommand: formatSlashCommand("play", translator)
                         })
                     )
                     .setColor(embedOptions.colors.warning)
@@ -41,36 +41,36 @@ export const checkQueueExists = async ({ interaction, queue, executionId }: Vali
                     })
             ],
             ephemeral: true
-        });
+        })
 
-        logger.debug(`User tried to use command '${interactionIdentifier}' but there was no queue.`);
-        throw new InteractionValidationError('Queue does not exist.');
+        logger.debug(`User tried to use command '${interactionIdentifier}' but there was no queue.`)
+        throw new InteractionValidationError("Queue does not exist.")
     }
 
-    return;
-};
+    return
+}
 
 export const checkHistoryExists = async ({ interaction, history, executionId }: ValidatorParams) => {
     const logger: Logger = loggerService.child({
-        module: 'utilValidation',
-        name: 'historyDoesNotExist',
+        module: "utilValidation",
+        name: "historyDoesNotExist",
         executionId: executionId,
         shardId: interaction.guild?.shardId,
         guildId: interaction.guild?.id
-    });
-    const translator = useServerTranslator(interaction);
+    })
+    const translator = useServerTranslator(interaction)
 
     const interactionIdentifier =
-        interaction.type === InteractionType.ApplicationCommand ? interaction.commandName : interaction.customId;
+        interaction.type === InteractionType.ApplicationCommand ? interaction.commandName : interaction.customId
 
     if (!history) {
         await interaction.reply({
             embeds: [
                 new EmbedBuilder()
                     .setDescription(
-                        translator('validation.historyDoesNotExist', {
+                        translator("validation.historyDoesNotExist", {
                             icon: embedOptions.icons.warning,
-                            playCommand: formatSlashCommand('play', translator)
+                            playCommand: formatSlashCommand("play", translator)
                         })
                     )
                     .setColor(embedOptions.colors.warning)
@@ -83,36 +83,36 @@ export const checkHistoryExists = async ({ interaction, history, executionId }: 
                     })
             ],
             ephemeral: true
-        });
+        })
 
-        logger.debug(`User tried to use command '${interactionIdentifier}' but there was no history.`);
-        throw new InteractionValidationError('History does not exist.');
+        logger.debug(`User tried to use command '${interactionIdentifier}' but there was no history.`)
+        throw new InteractionValidationError("History does not exist.")
     }
 
-    return;
-};
+    return
+}
 
 export const checkQueueCurrentTrack = async ({ interaction, queue, executionId }: ValidatorParams) => {
     const logger: Logger = loggerService.child({
-        module: 'utilValidation',
-        name: 'queueNoCurrentTrack',
+        module: "utilValidation",
+        name: "queueNoCurrentTrack",
         executionId: executionId,
         shardId: interaction.guild?.shardId,
         guildId: interaction.guild?.id
-    });
-    const translator = useServerTranslator(interaction);
+    })
+    const translator = useServerTranslator(interaction)
 
     const interactionIdentifier =
-        interaction.type === InteractionType.ApplicationCommand ? interaction.commandName : interaction.customId;
+        interaction.type === InteractionType.ApplicationCommand ? interaction.commandName : interaction.customId
 
     if (queue && !queue.currentTrack) {
         await interaction.reply({
             embeds: [
                 new EmbedBuilder()
                     .setDescription(
-                        translator('validation.queueNoCurrentTrack', {
+                        translator("validation.queueNoCurrentTrack", {
                             icon: embedOptions.icons.warning,
-                            playCommand: formatSlashCommand('play', translator)
+                            playCommand: formatSlashCommand("play", translator)
                         })
                     )
                     .setColor(embedOptions.colors.warning)
@@ -125,36 +125,36 @@ export const checkQueueCurrentTrack = async ({ interaction, queue, executionId }
                     })
             ],
             ephemeral: true
-        });
+        })
 
-        logger.debug(`User tried to use command '${interactionIdentifier}' but there was no current track.`);
-        throw new InteractionValidationError('Queue has no current track.');
+        logger.debug(`User tried to use command '${interactionIdentifier}' but there was no current track.`)
+        throw new InteractionValidationError("Queue has no current track.")
     }
 
-    return;
-};
+    return
+}
 
 export const checkQueueEmpty = async ({ interaction, queue, executionId }: ValidatorParams) => {
     const logger: Logger = loggerService.child({
-        module: 'utilValidation',
-        name: 'queueIsEmpty',
+        module: "utilValidation",
+        name: "queueIsEmpty",
         executionId: executionId,
         shardId: interaction.guild?.shardId,
         guildId: interaction.guild?.id
-    });
-    const translator = useServerTranslator(interaction);
+    })
+    const translator = useServerTranslator(interaction)
 
     const interactionIdentifier =
-        interaction.type === InteractionType.ApplicationCommand ? interaction.commandName : interaction.customId;
+        interaction.type === InteractionType.ApplicationCommand ? interaction.commandName : interaction.customId
 
     if (queue && queue.tracks.data.length === 0) {
         await interaction.reply({
             embeds: [
                 new EmbedBuilder()
                     .setDescription(
-                        translator('validation.queueIsEmpty', {
+                        translator("validation.queueIsEmpty", {
                             icon: embedOptions.icons.warning,
-                            playCommand: formatSlashCommand('play', translator)
+                            playCommand: formatSlashCommand("play", translator)
                         })
                     )
                     .setColor(embedOptions.colors.warning)
@@ -167,11 +167,11 @@ export const checkQueueEmpty = async ({ interaction, queue, executionId }: Valid
                     })
             ],
             ephemeral: true
-        });
+        })
 
-        logger.debug(`User tried to use command '${interactionIdentifier}' but there was no tracks in the queue.`);
-        throw new InteractionValidationError('Queue is empty.');
+        logger.debug(`User tried to use command '${interactionIdentifier}' but there was no tracks in the queue.`)
+        throw new InteractionValidationError("Queue is empty.")
     }
 
-    return;
-};
+    return
+}

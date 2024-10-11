@@ -1,6 +1,6 @@
-import type { Client } from 'discord.js';
+import type { Client } from "discord.js"
 
 export type CreatePlayerParams = {
-    client: Client;
-    executionId: string;
-};
+    client: Client
+    executionId: string
+}

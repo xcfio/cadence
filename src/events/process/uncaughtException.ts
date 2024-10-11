@@ -1,18 +1,18 @@
-import { randomUUID as uuidv4 } from 'node:crypto';
-import { loggerService, type Logger } from '../../common/services/logger';
+import { randomUUID as uuidv4 } from "node:crypto"
+import { loggerService, type Logger } from "../../common/services/logger"
 
 module.exports = {
-    name: 'uncaughtException',
+    name: "uncaughtException",
     isDebug: false,
     execute: async (error: Error) => {
-        const executionId: string = uuidv4();
+        const executionId: string = uuidv4()
         const logger: Logger = loggerService.child({
-            module: 'event',
-            name: 'uncaughtException',
+            module: "event",
+            name: "uncaughtException",
             executionId: executionId
-        });
+        })
 
-        logger.fatal(error, 'UNCAUGHT EXCEPTION ERROR:');
-        return;
+        logger.fatal(error, "UNCAUGHT EXCEPTION ERROR:")
+        return
     }
-};
+}

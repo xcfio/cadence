@@ -1,31 +1,31 @@
-import config from 'config';
-import { EmbedBuilder, GuildMember, InteractionType } from 'discord.js';
-import { InteractionValidationError } from '../classes/interactions';
-import { loggerService, type Logger } from '../services/logger';
-import type { EmbedOptions } from '../../types/configTypes';
-import type { ValidatorParams } from '../../types/utilTypes';
-import { useServerTranslator } from '../utils/localeUtil';
+import config from "config"
+import { EmbedBuilder, GuildMember, InteractionType } from "discord.js"
+import { InteractionValidationError } from "../classes/interactions"
+import { loggerService, type Logger } from "../services/logger"
+import type { EmbedOptions } from "../../types/configTypes"
+import type { ValidatorParams } from "../../types/utilTypes"
+import { useServerTranslator } from "../utils/localeUtil"
 
-const embedOptions: EmbedOptions = config.get('embedOptions');
+const embedOptions: EmbedOptions = config.get("embedOptions")
 export const checkInVoiceChannel = async ({ interaction, executionId }: ValidatorParams) => {
     const logger: Logger = loggerService.child({
-        module: 'validator',
-        name: 'notInVoiceChannel',
+        module: "validator",
+        name: "notInVoiceChannel",
         executionId: executionId,
         shardId: interaction.guild?.shardId,
         guildId: interaction.guild?.id
-    });
-    const translator = useServerTranslator(interaction);
+    })
+    const translator = useServerTranslator(interaction)
 
     const interactionIdentifier =
-        interaction.type === InteractionType.ApplicationCommand ? interaction.commandName : interaction.customId;
+        interaction.type === InteractionType.ApplicationCommand ? interaction.commandName : interaction.customId
 
     if (interaction.member instanceof GuildMember && !interaction.member.voice.channel) {
         await interaction.reply({
             embeds: [
                 new EmbedBuilder()
                     .setDescription(
-                        translator('validation.notInVoiceChannel', {
+                        translator("validation.notInVoiceChannel", {
                             icon: embedOptions.icons.warning
                         })
                     )
@@ -36,31 +36,31 @@ export const checkInVoiceChannel = async ({ interaction, executionId }: Validato
                     })
             ],
             ephemeral: true
-        });
+        })
 
-        logger.debug(`User tried to use command '${interactionIdentifier}' but was not in a voice channel.`);
-        throw new InteractionValidationError('User not in voice channel.');
+        logger.debug(`User tried to use command '${interactionIdentifier}' but was not in a voice channel.`)
+        throw new InteractionValidationError("User not in voice channel.")
     }
 
-    return;
-};
+    return
+}
 
 export const checkSameVoiceChannel = async ({ interaction, queue, executionId }: ValidatorParams) => {
     const logger: Logger = loggerService.child({
-        module: 'utilValidation',
-        name: 'notInSameVoiceChannel',
+        module: "utilValidation",
+        name: "notInSameVoiceChannel",
         executionId: executionId,
         shardId: interaction.guild?.shardId,
         guildId: interaction.guild?.id
-    });
-    const translator = useServerTranslator(interaction);
+    })
+    const translator = useServerTranslator(interaction)
 
     const interactionIdentifier =
-        interaction.type === InteractionType.ApplicationCommand ? interaction.commandName : interaction.customId;
+        interaction.type === InteractionType.ApplicationCommand ? interaction.commandName : interaction.customId
 
     if (!queue || !queue.dispatcher) {
         // If there is no queue or bot is not in voice channel, then there is no need to check if user is in same voice channel.
-        return;
+        return
     }
 
     if (
@@ -71,7 +71,7 @@ export const checkSameVoiceChannel = async ({ interaction, queue, executionId }:
             embeds: [
                 new EmbedBuilder()
                     .setDescription(
-                        translator('validation.notInSameVoiceChannel', {
+                        translator("validation.notInSameVoiceChannel", {
                             icon: embedOptions.icons.warning,
                             channel: `<#${queue.dispatcher.channel.id}>`
                         })
@@ -83,11 +83,11 @@ export const checkSameVoiceChannel = async ({ interaction, queue, executionId }:
                     })
             ],
             ephemeral: true
-        });
+        })
 
-        logger.debug(`User tried to use command '${interactionIdentifier}' but was not in the same voice channel.`);
-        throw new InteractionValidationError('User not in same voice channel.');
+        logger.debug(`User tried to use command '${interactionIdentifier}' but was not in the same voice channel.`)
+        throw new InteractionValidationError("User not in same voice channel.")
     }
 
-    return;
-};
+    return
+}

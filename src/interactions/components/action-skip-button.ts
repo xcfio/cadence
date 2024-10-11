@@ -1,41 +1,41 @@
-import { type GuildQueue, type Track, useQueue } from 'discord-player';
-import { EmbedBuilder, type MessageComponentInteraction } from 'discord.js';
-import { BaseComponentInteraction } from '../../common/classes/interactions';
-import type { BaseComponentParams, BaseComponentReturnType } from '../../types/interactionTypes';
-import { checkQueueCurrentTrack, checkQueueExists } from '../../common/validation/queueValidator';
-import { checkInVoiceChannel, checkSameVoiceChannel } from '../../common/validation/voiceChannelValidator';
-import { useServerTranslator, type Translator } from '../../common/utils/localeUtil';
-import { formatRepeatModeDetailed } from '../../common/utils/formattingUtils';
+import { type GuildQueue, type Track, useQueue } from "discord-player"
+import { EmbedBuilder, type MessageComponentInteraction } from "discord.js"
+import { BaseComponentInteraction } from "../../common/classes/interactions"
+import type { BaseComponentParams, BaseComponentReturnType } from "../../types/interactionTypes"
+import { checkQueueCurrentTrack, checkQueueExists } from "../../common/validation/queueValidator"
+import { checkInVoiceChannel, checkSameVoiceChannel } from "../../common/validation/voiceChannelValidator"
+import { useServerTranslator, type Translator } from "../../common/utils/localeUtil"
+import { formatRepeatModeDetailed } from "../../common/utils/formattingUtils"
 
 class ActionSkipButton extends BaseComponentInteraction {
     constructor() {
-        super('action-skip-button');
+        super("action-skip-button")
     }
 
     async execute(params: BaseComponentParams): BaseComponentReturnType {
-        const { executionId, interaction, referenceId } = params;
-        const logger = this.getLogger(this.name, executionId, interaction);
-        const translator = useServerTranslator(interaction);
+        const { executionId, interaction, referenceId } = params
+        const logger = this.getLogger(this.name, executionId, interaction)
+        const translator = useServerTranslator(interaction)
 
-        const queue: GuildQueue = useQueue(interaction.guild!.id)!;
+        const queue: GuildQueue = useQueue(interaction.guild!.id)!
 
         await this.runValidators({ interaction, queue, executionId }, [
             checkInVoiceChannel,
             checkSameVoiceChannel,
             checkQueueExists,
             checkQueueCurrentTrack
-        ]);
+        ])
 
         if (queue.currentTrack!.id !== referenceId) {
-            return await this.handleAlreadySkipped(interaction, translator);
+            return await this.handleAlreadySkipped(interaction, translator)
         }
 
-        const skippedTrack: Track = queue.currentTrack!;
-        queue.node.skip();
-        logger.debug('Skipped the track.');
+        const skippedTrack: Track = queue.currentTrack!
+        queue.node.skip()
+        logger.debug("Skipped the track.")
 
-        logger.debug('Responding with success embed.');
-        return await this.handleSuccess(interaction, skippedTrack, queue, translator);
+        logger.debug("Responding with success embed.")
+        return await this.handleSuccess(interaction, skippedTrack, queue, translator)
     }
 
     private async handleAlreadySkipped(interaction: MessageComponentInteraction, translator: Translator) {
@@ -43,7 +43,7 @@ class ActionSkipButton extends BaseComponentInteraction {
             embeds: [
                 new EmbedBuilder()
                     .setDescription(
-                        translator('validation.trackNotPlayingAnymore', {
+                        translator("validation.trackNotPlayingAnymore", {
                             icon: this.embedOptions.icons.warning
                         })
                     )
@@ -51,7 +51,7 @@ class ActionSkipButton extends BaseComponentInteraction {
             ],
             components: [],
             ephemeral: true
-        });
+        })
     }
 
     private async handleSuccess(
@@ -63,18 +63,18 @@ class ActionSkipButton extends BaseComponentInteraction {
         const successEmbed = new EmbedBuilder()
             .setAuthor(this.getEmbedUserAuthor(interaction))
             .setDescription(
-                `${translator('commands.skip.skippedTrack', {
+                `${translator("commands.skip.skippedTrack", {
                     icon: this.embedOptions.icons.skipped
-                })}\n${this.getDisplayTrackDurationAndUrl(skippedTrack, translator)}\n${formatRepeatModeDetailed(queue.repeatMode, this.embedOptions, translator, 'success')}`
+                })}\n${this.getDisplayTrackDurationAndUrl(skippedTrack, translator)}\n${formatRepeatModeDetailed(queue.repeatMode, this.embedOptions, translator, "success")}`
             )
             .setThumbnail(skippedTrack.thumbnail)
-            .setColor(this.embedOptions.colors.success);
+            .setColor(this.embedOptions.colors.success)
 
         return await interaction.reply({
             embeds: [successEmbed],
             components: []
-        });
+        })
     }
 }
 
-export default new ActionSkipButton();
+export default new ActionSkipButton()

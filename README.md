@@ -1,3 +1,5 @@
+# This repository forked from: https://github.com/mariusbegby/cadence-discord-bot
+
 <h1 align="center">
     <br>
     Cadence - The free Discord music bot.
@@ -15,10 +17,6 @@
     <a href="https://github.com/mariusbegby/cadence-discord-bot/blob/main/LICENSE.md"><img src="https://img.shields.io/github/license/mariusbegby/cadence-discord-bot?style=for-the-badge&label=License&labelColor=1b1c1d&logo=github&logoColor=white&color=4c73df" alt="Cadence bot license"></a>
     <a href="https://github.com/mariusbegby/cadence-discord-bot/releases"><img src="https://img.shields.io/github/package-json/v/mariusbegby/cadence-discord-bot/main?style=for-the-badge&label=Version&labelColor=1b1c1d&logo=github&logoColor=white&color=4c73df" alt="Cadence bot release"></a>&nbsp;
 </p>
-
-## 🚨 Deprecation notice 🚨
-
-This project is deprecated, meaning it will not receive any new updates. You can still download the code and setup hosting yourself if desired, but no support will be provided.
 
 <br>
 
@@ -61,66 +59,3 @@ Cadence offers an enriching audio experience on Discord with features such as:
 ## Credits and acknowledgments 🎉
 
 This project is made possible by the contributions from the community and the use of libraries like [discord.js](https://github.com/discordjs/discord.js/) and [discord-player](https://github.com/Androz2091/discord-player). A special thanks to [@twlite](https://github.com/twlite), [@pryzmian](https://github.com/pryzmian) and [@retrouser955](https://github.com/retrouser955) for providing feedback and help during development of this bot!
-
-### Contributors
-
-<table>
-<tr>
-    <td align="center" style="word-wrap: break-word; width: 75.0; height: 75.0">
-        <a href=https://github.com/mariusbegby>
-            <img src=https://avatars.githubusercontent.com/u/25694918?v=4 width="50;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Marius Begby/>
-            <br />
-            <sub style="font-size:14px"><b>Marius Begby</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 75.0; height: 75.0">
-        <a href=https://github.com/tacheometry>
-            <img src=https://avatars.githubusercontent.com/u/39647014?v=4 width="50;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=tacheometry/>
-            <br />
-            <sub style="font-size:14px"><b>tacheometry</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 75.0; height: 75.0">
-        <a href=https://github.com/pryzmian>
-            <img src=https://avatars.githubusercontent.com/u/89826250?v=4 width="50;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Aaron Sandoval/>
-            <br />
-            <sub style="font-size:14px"><b>Aaron Sandoval</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 75.0; height: 75.0">
-        <a href=https://github.com/missfrizzy>
-            <img src=https://avatars.githubusercontent.com/u/128760145?v=4 width="50;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=MissFrizzy/>
-            <br />
-            <sub style="font-size:14px"><b>MissFrizzy</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 75.0; height: 75.0">
-        <a href=https://github.com/twlite>
-            <img src=https://avatars.githubusercontent.com/u/46562212?v=4 width="50;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Twilight/>
-            <br />
-            <sub style="font-size:14px"><b>Twilight</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 75.0; height: 75.0">
-        <a href=https://github.com/Edward205>
-            <img src=https://avatars.githubusercontent.com/u/52004020?v=4 width="50;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Edward205/>
-            <br />
-            <sub style="font-size:14px"><b>Edward205</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 75.0; height: 75.0">
-        <a href=https://github.com/Kriblin>
-            <img src=https://avatars.githubusercontent.com/u/28916166?v=4 width="50;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Niko G./>
-            <br />
-            <sub style="font-size:14px"><b>Niko G.</b></sub>
-        </a>
-    </td>
-    <td align="center" style="word-wrap: break-word; width: 75.0; height: 75.0">
-        <a href=https://github.com/sloraris>
-            <img src=https://avatars.githubusercontent.com/u/97694636?v=4 width="50;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Parker Owings/>
-            <br />
-            <sub style="font-size:14px"><b>Parker Owings</b></sub>
-        </a>
-    </td>
-</tr>
-</table>

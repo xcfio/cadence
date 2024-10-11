@@ -1,18 +1,18 @@
-import { randomUUID as uuidv4 } from 'node:crypto';
-import { loggerService, type Logger } from '../../common/services/logger';
+import { randomUUID as uuidv4 } from "node:crypto"
+import { loggerService, type Logger } from "../../common/services/logger"
 
 module.exports = {
-    name: 'debug',
+    name: "debug",
     isDebug: true,
     isPlayerEvent: false,
     execute: async (message: string) => {
-        const executionId: string = uuidv4();
+        const executionId: string = uuidv4()
         const logger: Logger = loggerService.child({
-            module: 'event',
-            name: 'playerGeneralDebug',
+            module: "event",
+            name: "playerGeneralDebug",
             executionId: executionId
-        });
+        })
 
-        logger.debug(message);
+        logger.debug(message)
     }
-};
+}
