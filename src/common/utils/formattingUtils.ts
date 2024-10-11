@@ -1,5 +1,4 @@
 import { QueueRepeatMode } from "discord-player"
-import type { Translator } from "./localeUtil"
 import type { EmbedOptions } from "../../types/configTypes"
 
 export function formatDuration(durationMs: number): string {
@@ -23,23 +22,23 @@ export function formatDuration(durationMs: number): string {
     return `${durationSeconds}s`
 }
 
-export function formatSlashCommand(commandName: string, translator: Translator): string {
-    const translatedName = translator(`commands.${commandName}.metadata.name`, {
-        defaultValue: commandName
-    })
-    return `**\`/${translatedName}\`**`
+export function formatSlashCommand(commandName: string): string {
+    // const translatedName = translator(`commands.${commandName}.metadata.name`, {
+    //     defaultValue: commandName
+    // })
+    return `**\`/${commandName}\`**`
 }
 
-export function formatRepeatMode(repeatMode: QueueRepeatMode, translator: Translator): string {
+export function formatRepeatMode(repeatMode: QueueRepeatMode): string {
     switch (repeatMode) {
         case QueueRepeatMode.AUTOPLAY:
-            return translator("musicPlayerCommon.queueRepeatMode.autoplay")
+            return "Autoplay"
         case QueueRepeatMode.OFF:
-            return translator("musicPlayerCommon.queueRepeatMode.off")
+            return "Disabled"
         case QueueRepeatMode.TRACK:
-            return translator("musicPlayerCommon.queueRepeatMode.track")
+            return "Track"
         case QueueRepeatMode.QUEUE:
-            return translator("musicPlayerCommon.queueRepeatMode.queue")
+            return "Queue"
         default:
             return ""
     }
@@ -48,7 +47,7 @@ export function formatRepeatMode(repeatMode: QueueRepeatMode, translator: Transl
 export function formatRepeatModeDetailed(
     repeatMode: QueueRepeatMode,
     embedOptions: EmbedOptions,
-    translator: Translator,
+    translator: never,
     state = "info"
 ) {
     let icon: string
@@ -67,9 +66,7 @@ export function formatRepeatModeDetailed(
             return ""
     }
 
-    return `\n${translator("musicPlayerCommon.loopingInfo", {
-        icon,
-        loopMode: formatRepeatMode(repeatMode, translator),
-        loopCommand: formatSlashCommand("loop", translator)
-    })}`
+    return `\n${`${icon} **Looping**\nLoop mode is set to **\`${formatRepeatMode(
+        repeatMode
+    )}\`**. You can change it with ${formatSlashCommand("loop")}.\n`}`
 }
