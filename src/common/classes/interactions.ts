@@ -25,7 +25,7 @@ import type {
     BaseSlashCommandReturnType
 } from "../../types/interactionTypes"
 import type { Validator, ValidatorParams } from "../../types/utilTypes"
-import type { Translator } from "../utils/localeUtil"
+// import type { Translator } from "../utils/localeUtil"
 
 abstract class BaseInteraction {
     embedOptions: EmbedOptions
@@ -72,18 +72,16 @@ abstract class BaseInteraction {
         return durationFormat
     }
 
-    protected getFormattedTrackUrl(track: Track, translator: Translator): string {
-        const trackTitle = track.title ?? translator("musicPlayerCommon.unavailableTrackTitle")
+    protected getFormattedTrackUrl(track: Track): string {
+        const trackTitle = track.title
         const trackUrl = track.url ?? track.raw.url
-        if (!trackTitle || !trackUrl) {
-            return translator("musicPlayerCommon.unavailableTrackUrl")
-        }
+        if (!trackTitle || !trackUrl) return "**Unavailable**"
         return `**[${trackTitle}](${trackUrl})**`
     }
 
-    protected getDisplayTrackDurationAndUrl(track: Track, translator: Translator): string {
+    protected getDisplayTrackDurationAndUrl(track: Track): string {
         const formattedDuration = this.getFormattedDuration(track)
-        const formattedUrl = this.getFormattedTrackUrl(track, translator)
+        const formattedUrl = this.getFormattedTrackUrl(track)
 
         return `${formattedDuration} ${formattedUrl}`
     }
@@ -104,25 +102,20 @@ abstract class BaseInteraction {
 
     protected getFooterDisplayPageInfo(
         interaction: ChatInputCommandInteraction,
-        queue: GuildQueue | GuildQueueHistory,
-        translator: Translator
+        queue: GuildQueue | GuildQueueHistory
     ): EmbedFooterData {
         const pageIndex: number = (interaction.options.getInteger("page") || 1) - 1
         const totalPages: number = Math.ceil(queue.tracks.data.length / 10) || 1
         return {
-            text: translator("musicPlayerCommon.footerPageNumber", {
-                page: pageIndex + 1,
-                pageCount: totalPages,
-                count: queue.tracks.data.length
-            })
+            text: `Page ${pageIndex + 1} of ${totalPages} (${queue.tracks.data.length} tracks)`
         }
     }
 
-    protected getDisplayTrackRequestedBy = (track: Track, translator: Translator): string => {
-        return track.requestedBy ? `<@${track.requestedBy.id}>` : translator("musicPlayerCommon.unavailableRequestedBy")
+    protected getDisplayTrackRequestedBy = (track: Track): string => {
+        return track.requestedBy ? `<@${track.requestedBy.id}>` : "Unavailable"
     }
 
-    protected getDisplayQueueProgressBar(queue: GuildQueue, translator: Translator): string {
+    protected getDisplayQueueProgressBar(queue: GuildQueue): string {
         let progressBar = ""
         try {
             const timestamp: PlayerTimestamp | null = queue.node.getTimestamp()
@@ -138,13 +131,11 @@ abstract class BaseInteraction {
                 })} **\`${timestamp.total.label}\`**`
 
                 if (Number(queue.currentTrack?.duration) === 0 || queue.currentTrack?.duration === "0:00") {
-                    progressBar = translator("musicPlayerCommon.unavailableDuration")
+                    progressBar = "_No duration available._"
                 }
 
                 if (queue.currentTrack?.raw.live) {
-                    progressBar = translator("musicPlayerCommon.playingLive", {
-                        icon: this.embedOptions.icons.liveTrack
-                    })
+                    progressBar = `${this.embedOptions.icons.liveTrack} **\`LIVE\`** - Playing continuously from live source.`
                 }
             }
         } catch {
@@ -178,16 +169,12 @@ abstract class BaseInteractionWithEmbedResponse extends BaseInteraction {
 
     protected getEmbedQueueAuthor(
         interaction: MessageComponentInteraction | ChatInputCommandInteraction,
-        queue: GuildQueue,
-        translator: Translator
+        queue: GuildQueue
     ): EmbedAuthorOptions {
         const bitrate = queue.channel ? queue.channel.bitrate / 1000 : 0
         return {
-            name: translator("musicPlayerCommon.voiceChannelInfo", {
-                channel: queue.channel!.name,
-                bitrate
-            }),
-            iconURL: interaction.guild!.iconURL() || this.embedOptions.info.fallbackIconUrl
+            name: `Channel: ${queue.channel?.name} (${bitrate}kbps)`,
+            iconURL: interaction.guild?.iconURL() ?? this.embedOptions.info.fallbackIconUrl
         }
     }
 }
