@@ -331,8 +331,8 @@ packages:
   genius-lyrics@4.4.7:
     resolution: {integrity: sha512-cgO5nSeFqtLZAUyWB+8XWMRBIRzPUSUC42N3CoDGRgKX1anGAyDUhM6/RVIJXCNnQa6XHZHswKcKgHaRiyl+GQ==}
 
-  happy-dom@15.8.0:
-    resolution: {integrity: sha512-LwBvPvR4MQ1xfrf4gbWRJzeL2xQqWiEiHvZF5uA1AwlCCgjH9ht0fGVXciRGQCghdHAIXw1zGX1mJ6a3O0fpeA==}
+  happy-dom@15.10.1:
+    resolution: {integrity: sha512-FuGnj/qIB4QnBL6fWmD7Wnh6STxevLgOVWB6+nopDGgWG1+t9CXkNB2ldZ+iqwD2UKxD2D0SU8el8A6AX6Q1+g==}
     engines: {node: '>=18.0.0'}
 
   he@1.2.0:
@@ -905,7 +905,7 @@ snapshots:
   discord-player-youtubei@1.3.4:
     dependencies:
       bgutils-js: 3.1.0
-      happy-dom: 15.8.0
+      happy-dom: 15.10.1
       tiny-typed-emitter: 2.1.0
       undici: 6.20.0
       youtubei.js: 11.0.1
@@ -1025,7 +1025,7 @@ snapshots:
       node-html-parser: 6.1.13
       undici: 6.20.0
 
-  happy-dom@15.8.0:
+  happy-dom@15.10.1:
     dependencies:
       entities: 4.5.0
       webidl-conversions: 7.0.0
