@@ -1,4 +1,4 @@
-# This repository forked from: https://github.com/mariusbegby/cadence-discord-bot
+###### This repository was [forked](https://github.com/xcfio/cadence/commit/89199bd26273dcb3586417bb27c0463474284a3d) from: https://github.com/mariusbegby/cadence-discord-bot
 
 <h1 align="center">
     <br>
