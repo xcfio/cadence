@@ -30,8 +30,8 @@ importers:
         specifier: ^23.16.4
         version: 23.16.4
       i18next-fs-backend:
-        specifier: ^2.3.2
-        version: 2.3.2
+        specifier: ^2.6.0
+        version: 2.6.0
       mediaplex:
         specifier: ^0.0.9
         version: 0.0.9
@@ -327,8 +327,8 @@ packages:
   himalaya@1.1.0:
     resolution: {integrity: sha512-LLase1dHCRMel68/HZTFft0N0wti0epHr3nNY7ynpLbyZpmrKMQ8YIpiOV77TM97cNpC8Wb2n6f66IRggwdWPw==}
 
-  i18next-fs-backend@2.3.2:
-    resolution: {integrity: sha512-LIwUlkqDZnUI8lnUxBnEj8K/FrHQTT/Sc+1rvDm9E8YvvY5YxzoEAASNx+W5M9DfD5s77lI5vSAFWeTp26B/3Q==}
+  i18next-fs-backend@2.6.0:
+    resolution: {integrity: sha512-3ZlhNoF9yxnM8pa8bWp5120/Ob6t4lVl1l/tbLmkml/ei3ud8IWySCHt2lrY5xWRlSU5D9IV2sm5bEbGuTqwTw==}
 
   i18next-resources-for-ts@1.5.0:
     resolution: {integrity: sha512-gzVYct/sMeeOzomK0+8nl7YSr61xiDzf4Kg51g7StBaXAaKE/Vb1CLNHZ8dY56sYz6qmbwHRYHqMPanGi0go4w==}
@@ -992,7 +992,7 @@ snapshots:
 
   himalaya@1.1.0: {}
 
-  i18next-fs-backend@2.3.2: {}
+  i18next-fs-backend@2.6.0: {}
 
   i18next-resources-for-ts@1.5.0:
     dependencies:
